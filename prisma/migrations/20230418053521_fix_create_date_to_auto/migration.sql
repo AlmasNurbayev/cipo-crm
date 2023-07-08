@@ -1,0 +1,8 @@
+-- AlterTable
+ALTER TABLE "client" ALTER COLUMN "create_date" SET DEFAULT CURRENT_TIMESTAMP;
+
+-- AlterTable
+ALTER TABLE "subscribe" ALTER COLUMN "create_date" SET DEFAULT CURRENT_TIMESTAMP;
+
+-- AlterTable
+ALTER TABLE "user" ALTER COLUMN "create_date" SET DEFAULT CURRENT_TIMESTAMP;

@@ -1,0 +1,52 @@
+generator client {
+  provider = "prisma-client-js"
+  //engineType = "binary"
+  previewFeatures = ["fullTextSearch"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model user { // Пользователи
+  id Int @id @default(autoincrement())
+  email String @unique
+  phone String? @unique
+  name String?
+  password String
+  salt String?
+  role String // нужно присваивать user по умолчанию
+  // date monitor
+  create_date DateTime? @default(now()) @db.Timestamptz
+  changed_date DateTime @updatedAt @db.Timestamptz
+}
+
+model client {
+  id Int @id @default(autoincrement())
+  email String? @unique
+  phone String? @unique
+  name String?
+  city String?
+  district String?
+  wish String?
+  // dates
+  create_date DateTime? @default(now()) @db.Timestamptz
+  changed_date DateTime @updatedAt @db.Timestamptz
+  // used in
+  subscribe subscribe[]
+}
+
+model subscribe {
+  id Int @id @default(autoincrement())
+  sms_send Boolean?
+  sms_date_end DateTime? @db.Timestamptz
+  email_send Boolean?
+  email_date_end DateTime? @db.Timestamptz
+  // dates
+  create_date DateTime? @default(now()) @db.Timestamptz
+  changed_date DateTime @updatedAt @db.Timestamptz
+  // foreign keys
+  client client @relation(fields: [client_id], references: [id])
+  client_id Int
+}
